@@ -1879,7 +1879,7 @@ public class FutureTest extends FutureTestBase {
     completedFutureTimeout(null, io.vertx.core.Future.succeededFuture("value"));
   }
 
-  // Not executing this for now dur to build failures, but runs with the @Test annotation.
+  @Test
   public void allWithSuccessfulResult() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
