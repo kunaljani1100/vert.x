@@ -1891,7 +1891,6 @@ public class FutureTest extends FutureTestBase {
     Future<String> f8 = Future.succeededFuture("f8");
     ContextInternal contextInternal = (ContextInternal) vertx.getOrCreateContext();
     Future.all(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(onSuccess(result -> {
-      assertSame(contextInternal, contextInternal);
       assertTrue(result.succeeded());
       testComplete();
     }));
