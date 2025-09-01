@@ -1889,11 +1889,8 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.succeededFuture("f6");
     Future<String> f7 = Future.succeededFuture("f7");
     Future<String> f8 = Future.succeededFuture("f8");
-    Future.all(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(onSuccess(result -> {
-      assertTrue(result.succeeded());
-      testComplete();
-    }));
-    await();
+    CompositeFuture compositeFuture = Future.all(f1, f2, f3, f4, f5, f6, f7, f8);
+    assertTrue(compositeFuture.succeeded());
   }
 
   // Not executing this for now dur to build failures, but runs with the @Test annotation.
