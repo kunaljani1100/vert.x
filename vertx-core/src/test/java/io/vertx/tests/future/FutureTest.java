@@ -1879,24 +1879,24 @@ public class FutureTest extends FutureTestBase {
     completedFutureTimeout(null, io.vertx.core.Future.succeededFuture("value"));
   }
 
-//  @Test
-//  public void allWithSuccessfulResult() {
-//    Future<String> f1 = Future.succeededFuture("f1");
-//    Future<String> f2 = Future.succeededFuture("f2");
-//    Future<String> f3 = Future.succeededFuture("f3");
-//    Future<String> f4 = Future.succeededFuture("f4");
-//    Future<String> f5 = Future.succeededFuture("f5");
-//    Future<String> f6 = Future.succeededFuture("f6");
-//    Future<String> f7 = Future.succeededFuture("f7");
-//    Future<String> f8 = Future.succeededFuture("f8");
-//    ContextInternal contextInternal = (ContextInternal) vertx.getOrCreateContext();
-//    Future.all(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(onSuccess(result -> {
-//      assertSame(contextInternal, contextInternal);
-//      assertTrue(result.succeeded());
-//      testComplete();
-//    }));
-//    await();
-//  }
+  @Test
+  public void allWithSuccessfulResult() {
+    Future<String> f1 = Future.succeededFuture("f1");
+    Future<String> f2 = Future.succeededFuture("f2");
+    Future<String> f3 = Future.succeededFuture("f3");
+    Future<String> f4 = Future.succeededFuture("f4");
+    Future<String> f5 = Future.succeededFuture("f5");
+    Future<String> f6 = Future.succeededFuture("f6");
+    Future<String> f7 = Future.succeededFuture("f7");
+    Future<String> f8 = Future.succeededFuture("f8");
+    ContextInternal contextInternal = (ContextInternal) vertx.getOrCreateContext();
+    Future.all(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(onSuccess(result -> {
+      assertSame(contextInternal, contextInternal);
+      assertTrue(result.succeeded());
+      testComplete();
+    }));
+    await();
+  }
 //
 //  @Test
 //  public void allWithFailureResult() {
