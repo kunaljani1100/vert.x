@@ -1893,7 +1893,7 @@ public class FutureTest extends FutureTestBase {
     assertTrue(compositeFuture.succeeded());
   }
 
-  // Not executing this for now dur to build failures, but runs with the @Test annotation.
+  @Test
   public void allWithFailureResult() {
     Future<String> f1 = Future.failedFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
@@ -1903,14 +1903,11 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.succeededFuture("f6");
     Future<String> f7 = Future.succeededFuture("f7");
     Future<String> f8 = Future.succeededFuture("f8");
-    Future.all(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(result -> {
-      assertTrue(result.failed());
-      testComplete();
-    });
-    await();
+    CompositeFuture compositeFuture = Future.all(f1, f2, f3, f4, f5, f6, f7, f8);
+    assertTrue(compositeFuture.failed());
   }
 
-  // Not executing this for now dur to build failures, but runs with the @Test annotation.
+  @Test
   public void anyWithSuccessfulResult() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
@@ -1920,14 +1917,11 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.succeededFuture("f6");
     Future<String> f7 = Future.succeededFuture("f7");
     Future<String> f8 = Future.succeededFuture("f8");
-    Future.any(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(onSuccess(result -> {
-      assertTrue(result.succeeded());
-      testComplete();
-    }));
-    await();
+    CompositeFuture compositeFuture = Future.any(f1, f2, f3, f4, f5, f6, f7, f8);
+    assertTrue(compositeFuture.succeeded());
   }
 
-  // Not executing this for now dur to build failures, but runs with the @Test annotation.
+  @Test
   public void anyWithFailureResult() {
     Future<String> f1 = Future.failedFuture("f1");
     Future<String> f2 = Future.failedFuture("f2");
@@ -1937,14 +1931,11 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.failedFuture("f6");
     Future<String> f7 = Future.failedFuture("f7");
     Future<String> f8 = Future.failedFuture("f8");
-    Future.any(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(result -> {
-      assertTrue(result.failed());
-      testComplete();
-    });
-    await();
+    CompositeFuture compositeFuture = Future.any(f1, f2, f3, f4, f5, f6, f7, f8);
+    assertTrue(compositeFuture.failed());
   }
 
-  // Not executing this for now dur to build failures, but runs with the @Test annotation.
+  @Test
   public void joinWithSuccessfulResult() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
@@ -1954,14 +1945,11 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.succeededFuture("f6");
     Future<String> f7 = Future.succeededFuture("f7");
     Future<String> f8 = Future.succeededFuture("f8");
-    Future.join(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(onSuccess(result -> {
-      assertTrue(result.succeeded());
-      testComplete();
-    }));
-    await();
+    CompositeFuture compositeFuture = Future.join(f1, f2, f3, f4, f5, f6, f7, f8);
+    assertTrue(compositeFuture.succeeded());
   }
 
-  // Not executing this for now dur to build failures, but runs with the @Test annotation.
+  @Test
   public void joinWithFailureResult() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
@@ -1971,11 +1959,8 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.failedFuture("f6");
     Future<String> f7 = Future.failedFuture("f7");
     Future<String> f8 = Future.failedFuture("f8");
-    Future.join(f1, f2, f3, f4, f5, f6, f7, f8).onComplete(result -> {
-      assertTrue(result.failed());
-      testComplete();
-    });
-    await();
+    CompositeFuture compositeFuture = Future.join(f1, f2, f3, f4, f5, f6, f7, f8);
+    assertTrue(compositeFuture.failed());
   }
 
   private void completedFutureTimeout(Context ctx, io.vertx.core.Future<String> future) throws Exception {
