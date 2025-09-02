@@ -1879,7 +1879,7 @@ public class FutureTest extends FutureTestBase {
     completedFutureTimeout(null, io.vertx.core.Future.succeededFuture("value"));
   }
 
-  // Ignore this test since it will cause the build to fail.
+  @Test
   public void allWithSuccessfulResult() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
@@ -1895,42 +1895,6 @@ public class FutureTest extends FutureTestBase {
       testComplete();
     };
     Future.all(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
-  }
-
-  // Ignore this test since it will cause the build to fail.
-  public void anyWithSuccessfulResult() {
-    Future<String> f1 = Future.failedFuture("f1");
-    Future<String> f2 = Future.failedFuture("f2");
-    Future<String> f3 = Future.succeededFuture("f3");
-    Future<String> f4 = Future.succeededFuture("f4");
-    Future<String> f5 = Future.succeededFuture("f5");
-    Future<String> f6 = Future.succeededFuture("f6");
-    Future<String> f7 = Future.succeededFuture("f7");
-    Future<String> f8 = Future.succeededFuture("f8");
-    Handler<AsyncResult<CompositeFuture>> handler = result -> {};
-    Handler<AsyncResult<CompositeFuture>> completion = ar -> {
-      assertTrue(ar.succeeded());
-      testComplete();
-    };
-    Future.any(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
-  }
-
-  // Ignore this test since it will cause the build to fail.
-  public void joinWithSuccessfulResult() {
-    Future<String> f1 = Future.succeededFuture("f1");
-    Future<String> f2 = Future.succeededFuture("f2");
-    Future<String> f3 = Future.succeededFuture("f3");
-    Future<String> f4 = Future.succeededFuture("f4");
-    Future<String> f5 = Future.succeededFuture("f5");
-    Future<String> f6 = Future.succeededFuture("f6");
-    Future<String> f7 = Future.succeededFuture("f7");
-    Future<String> f8 = Future.succeededFuture("f8");
-    Handler<AsyncResult<CompositeFuture>> handler = result -> {};
-    Handler<AsyncResult<CompositeFuture>> completion = ar -> {
-      assertTrue(ar.succeeded());
-      testComplete();
-    };
-    Future.join(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
   }
 
   private void completedFutureTimeout(Context ctx, io.vertx.core.Future<String> future) throws Exception {
