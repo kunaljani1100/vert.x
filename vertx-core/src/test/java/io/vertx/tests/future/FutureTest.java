@@ -1892,7 +1892,7 @@ public class FutureTest extends FutureTestBase {
     Handler<AsyncResult<CompositeFuture>> handler = result -> {};
     Handler<AsyncResult<CompositeFuture>> completion = ar -> {
       assertTrue(ar.succeeded());
-      complete();
+      testComplete();
     };
     Future.all(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
   }
@@ -1910,7 +1910,7 @@ public class FutureTest extends FutureTestBase {
     Handler<AsyncResult<CompositeFuture>> handler = result -> {};
     Handler<AsyncResult<CompositeFuture>> completion = ar -> {
       assertTrue(ar.succeeded());
-      complete();
+      testComplete();
     };
     Future.any(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
   }
@@ -1928,7 +1928,7 @@ public class FutureTest extends FutureTestBase {
     Handler<AsyncResult<CompositeFuture>> handler = result -> {};
     Handler<AsyncResult<CompositeFuture>> completion = ar -> {
       assertTrue(ar.succeeded());
-      complete();
+      testComplete();
     };
     Future.join(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
   }
