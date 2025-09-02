@@ -1880,7 +1880,6 @@ public class FutureTest extends FutureTestBase {
   }
 
   @Test
-  @Ignore
   public void allWithSuccessfulResult() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
@@ -1890,84 +1889,88 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.succeededFuture("f6");
     Future<String> f7 = Future.succeededFuture("f7");
     Future<String> f8 = Future.succeededFuture("f8");
-    CompositeFuture compositeFuture = Future.all(f1, f2, f3, f4, f5, f6, f7, f8);
-    assertTrue(compositeFuture.succeeded());
+    Handler<AsyncResult<CompositeFuture>> handler = result -> {};
+    Handler<AsyncResult<CompositeFuture>> completion = ar -> {
+      assertTrue(ar.succeeded());
+      complete();
+    };
+    Future.all(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
   }
 
-  @Test
-  @Ignore
-  public void allWithFailureResult() {
-    Future<String> f1 = Future.failedFuture("f1");
-    Future<String> f2 = Future.succeededFuture("f2");
-    Future<String> f3 = Future.succeededFuture("f3");
-    Future<String> f4 = Future.succeededFuture("f4");
-    Future<String> f5 = Future.succeededFuture("f5");
-    Future<String> f6 = Future.succeededFuture("f6");
-    Future<String> f7 = Future.succeededFuture("f7");
-    Future<String> f8 = Future.succeededFuture("f8");
-    CompositeFuture compositeFuture = Future.all(f1, f2, f3, f4, f5, f6, f7, f8);
-    assertTrue(compositeFuture.failed());
-  }
-
-  @Test
-  @Ignore
-  public void anyWithSuccessfulResult() {
-    Future<String> f1 = Future.succeededFuture("f1");
-    Future<String> f2 = Future.succeededFuture("f2");
-    Future<String> f3 = Future.succeededFuture("f3");
-    Future<String> f4 = Future.failedFuture("f4");
-    Future<String> f5 = Future.failedFuture("f5");
-    Future<String> f6 = Future.succeededFuture("f6");
-    Future<String> f7 = Future.succeededFuture("f7");
-    Future<String> f8 = Future.succeededFuture("f8");
-    CompositeFuture compositeFuture = Future.any(f1, f2, f3, f4, f5, f6, f7, f8);
-    assertTrue(compositeFuture.succeeded());
-  }
-
-  @Test
-  @Ignore
-  public void anyWithFailureResult() {
-    Future<String> f1 = Future.failedFuture("f1");
-    Future<String> f2 = Future.failedFuture("f2");
-    Future<String> f3 = Future.failedFuture("f3");
-    Future<String> f4 = Future.failedFuture("f4");
-    Future<String> f5 = Future.failedFuture("f5");
-    Future<String> f6 = Future.failedFuture("f6");
-    Future<String> f7 = Future.failedFuture("f7");
-    Future<String> f8 = Future.failedFuture("f8");
-    CompositeFuture compositeFuture = Future.any(f1, f2, f3, f4, f5, f6, f7, f8);
-    assertTrue(compositeFuture.failed());
-  }
-
-  @Test
-  @Ignore
-  public void joinWithSuccessfulResult() {
-    Future<String> f1 = Future.succeededFuture("f1");
-    Future<String> f2 = Future.succeededFuture("f2");
-    Future<String> f3 = Future.succeededFuture("f3");
-    Future<String> f4 = Future.succeededFuture("f4");
-    Future<String> f5 = Future.succeededFuture("f5");
-    Future<String> f6 = Future.succeededFuture("f6");
-    Future<String> f7 = Future.succeededFuture("f7");
-    Future<String> f8 = Future.succeededFuture("f8");
-    CompositeFuture compositeFuture = Future.join(f1, f2, f3, f4, f5, f6, f7, f8);
-    assertTrue(compositeFuture.succeeded());
-  }
-
-  @Test
-  @Ignore
-  public void joinWithFailureResult() {
-    Future<String> f1 = Future.succeededFuture("f1");
-    Future<String> f2 = Future.succeededFuture("f2");
-    Future<String> f3 = Future.failedFuture("f3");
-    Future<String> f4 = Future.failedFuture("f4");
-    Future<String> f5 = Future.failedFuture("f5");
-    Future<String> f6 = Future.failedFuture("f6");
-    Future<String> f7 = Future.failedFuture("f7");
-    Future<String> f8 = Future.failedFuture("f8");
-    CompositeFuture compositeFuture = Future.join(f1, f2, f3, f4, f5, f6, f7, f8);
-    assertTrue(compositeFuture.failed());
-  }
+//  @Test
+//  @Ignore
+//  public void allWithFailureResult() {
+//    Future<String> f1 = Future.failedFuture("f1");
+//    Future<String> f2 = Future.succeededFuture("f2");
+//    Future<String> f3 = Future.succeededFuture("f3");
+//    Future<String> f4 = Future.succeededFuture("f4");
+//    Future<String> f5 = Future.succeededFuture("f5");
+//    Future<String> f6 = Future.succeededFuture("f6");
+//    Future<String> f7 = Future.succeededFuture("f7");
+//    Future<String> f8 = Future.succeededFuture("f8");
+//    CompositeFuture compositeFuture = Future.all(f1, f2, f3, f4, f5, f6, f7, f8);
+//    assertTrue(compositeFuture.failed());
+//  }
+//
+//  @Test
+//  @Ignore
+//  public void anyWithSuccessfulResult() {
+//    Future<String> f1 = Future.succeededFuture("f1");
+//    Future<String> f2 = Future.succeededFuture("f2");
+//    Future<String> f3 = Future.succeededFuture("f3");
+//    Future<String> f4 = Future.failedFuture("f4");
+//    Future<String> f5 = Future.failedFuture("f5");
+//    Future<String> f6 = Future.succeededFuture("f6");
+//    Future<String> f7 = Future.succeededFuture("f7");
+//    Future<String> f8 = Future.succeededFuture("f8");
+//    CompositeFuture compositeFuture = Future.any(f1, f2, f3, f4, f5, f6, f7, f8);
+//    assertTrue(compositeFuture.succeeded());
+//  }
+//
+//  @Test
+//  @Ignore
+//  public void anyWithFailureResult() {
+//    Future<String> f1 = Future.failedFuture("f1");
+//    Future<String> f2 = Future.failedFuture("f2");
+//    Future<String> f3 = Future.failedFuture("f3");
+//    Future<String> f4 = Future.failedFuture("f4");
+//    Future<String> f5 = Future.failedFuture("f5");
+//    Future<String> f6 = Future.failedFuture("f6");
+//    Future<String> f7 = Future.failedFuture("f7");
+//    Future<String> f8 = Future.failedFuture("f8");
+//    CompositeFuture compositeFuture = Future.any(f1, f2, f3, f4, f5, f6, f7, f8);
+//    assertTrue(compositeFuture.failed());
+//  }
+//
+//  @Test
+//  @Ignore
+//  public void joinWithSuccessfulResult() {
+//    Future<String> f1 = Future.succeededFuture("f1");
+//    Future<String> f2 = Future.succeededFuture("f2");
+//    Future<String> f3 = Future.succeededFuture("f3");
+//    Future<String> f4 = Future.succeededFuture("f4");
+//    Future<String> f5 = Future.succeededFuture("f5");
+//    Future<String> f6 = Future.succeededFuture("f6");
+//    Future<String> f7 = Future.succeededFuture("f7");
+//    Future<String> f8 = Future.succeededFuture("f8");
+//    CompositeFuture compositeFuture = Future.join(f1, f2, f3, f4, f5, f6, f7, f8);
+//    assertTrue(compositeFuture.succeeded());
+//  }
+//
+//  @Test
+//  @Ignore
+//  public void joinWithFailureResult() {
+//    Future<String> f1 = Future.succeededFuture("f1");
+//    Future<String> f2 = Future.succeededFuture("f2");
+//    Future<String> f3 = Future.failedFuture("f3");
+//    Future<String> f4 = Future.failedFuture("f4");
+//    Future<String> f5 = Future.failedFuture("f5");
+//    Future<String> f6 = Future.failedFuture("f6");
+//    Future<String> f7 = Future.failedFuture("f7");
+//    Future<String> f8 = Future.failedFuture("f8");
+//    CompositeFuture compositeFuture = Future.join(f1, f2, f3, f4, f5, f6, f7, f8);
+//    assertTrue(compositeFuture.failed());
+//  }
 
   private void completedFutureTimeout(Context ctx, io.vertx.core.Future<String> future) throws Exception {
     Future<String> timeout = future.timeout(10, TimeUnit.SECONDS);
