@@ -1880,7 +1880,7 @@ public class FutureTest extends FutureTestBase {
   }
 
   @Test
-  public void allWithSuccessfulResult() {
+  public void testAllSucceededWithEightFutures() {
     Future<String> f1 = Future.succeededFuture("f1");
     Future<String> f2 = Future.succeededFuture("f2");
     Future<String> f3 = Future.succeededFuture("f3");
@@ -1889,12 +1889,72 @@ public class FutureTest extends FutureTestBase {
     Future<String> f6 = Future.succeededFuture("f6");
     Future<String> f7 = Future.succeededFuture("f7");
     Future<String> f8 = Future.succeededFuture("f8");
-    Handler<AsyncResult<CompositeFuture>> handler = result -> {};
-    Handler<AsyncResult<CompositeFuture>> completion = ar -> {
-      assertTrue(ar.succeeded());
-      testComplete();
-    };
-    Future.all(f1, f2, f3, f4, f5, f6, f7, f8).andThen(handler).onComplete(completion);
+    testAllSucceeded(Future.all(f1, f2, f3, f4, f5, f6, f7, f8));
+  }
+
+  private void testAllSucceeded(CompositeFuture all) {
+    Checker<CompositeFuture> checker = new Checker<>(all);
+    checker.assertSucceeded(all);
+    assertEquals("f1", all.<String>resultAt(0));
+    assertEquals("f2", all.<String>resultAt(1));
+    assertEquals("f3", all.<String>resultAt(2));
+    assertEquals("f4", all.<String>resultAt(3));
+    assertEquals("f5", all.<String>resultAt(4));
+    assertEquals("f6", all.<String>resultAt(5));
+    assertEquals("f7", all.<String>resultAt(6));
+    assertEquals("f8", all.<String>resultAt(7));
+  }
+
+  @Test
+  public void testAnySucceededWithEightFutures() {
+    Future<String> f1 = Future.succeededFuture("f1");
+    Future<String> f2 = Future.succeededFuture("f2");
+    Future<String> f3 = Future.succeededFuture("f3");
+    Future<String> f4 = Future.succeededFuture("f4");
+    Future<String> f5 = Future.succeededFuture("f5");
+    Future<String> f6 = Future.succeededFuture("f6");
+    Future<String> f7 = Future.succeededFuture("f7");
+    Future<String> f8 = Future.succeededFuture("f8");
+    testAnySucceeded(Future.any(f1, f2, f3, f4, f5, f6, f7, f8));
+  }
+
+  private void testAnySucceeded(CompositeFuture any) {
+    Checker<CompositeFuture> checker = new Checker<>(any);
+    checker.assertSucceeded(any);
+    assertEquals("f1", any.<String>resultAt(0));
+    assertEquals("f2", any.<String>resultAt(1));
+    assertEquals("f3", any.<String>resultAt(2));
+    assertEquals("f4", any.<String>resultAt(3));
+    assertEquals("f5", any.<String>resultAt(4));
+    assertEquals("f6", any.<String>resultAt(5));
+    assertEquals("f7", any.<String>resultAt(6));
+    assertEquals("f8", any.<String>resultAt(7));
+  }
+
+  @Test
+  public void testJoinSucceededWithEightFutures() {
+    Future<String> f1 = Future.succeededFuture("f1");
+    Future<String> f2 = Future.succeededFuture("f2");
+    Future<String> f3 = Future.succeededFuture("f3");
+    Future<String> f4 = Future.succeededFuture("f4");
+    Future<String> f5 = Future.succeededFuture("f5");
+    Future<String> f6 = Future.succeededFuture("f6");
+    Future<String> f7 = Future.succeededFuture("f7");
+    Future<String> f8 = Future.succeededFuture("f8");
+    testJoinSucceeded(Future.join(f1, f2, f3, f4, f5, f6, f7, f8));
+  }
+
+  private void testJoinSucceeded(CompositeFuture join) {
+    Checker<CompositeFuture> checker = new Checker<>(join);
+    checker.assertSucceeded(join);
+    assertEquals("f1", join.<String>resultAt(0));
+    assertEquals("f2", join.<String>resultAt(1));
+    assertEquals("f3", join.<String>resultAt(2));
+    assertEquals("f4", join.<String>resultAt(3));
+    assertEquals("f5", join.<String>resultAt(4));
+    assertEquals("f6", join.<String>resultAt(5));
+    assertEquals("f7", join.<String>resultAt(6));
+    assertEquals("f8", join.<String>resultAt(7));
   }
 
   private void completedFutureTimeout(Context ctx, io.vertx.core.Future<String> future) throws Exception {
